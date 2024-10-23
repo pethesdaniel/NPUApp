@@ -1,3 +1,6 @@
+using NPUApp.BLL.Mapping;
+using NPUApp.BLL.Services;
+using NPUApp.Database.Context;
 using NPUApp.Database.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +13,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //stubbed initial data
+builder.Services.AddDbContext<NpuAppDbContext>();
 builder.Services.SeedDbWithData();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<PostsService>();
 
 var app = builder.Build();
 

@@ -40,8 +40,8 @@ namespace NPUApp.Database.Seed
 
             var posts = new NpuPost[]
             {
-                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[0], User = users[0]  },
-                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[1], User = users[1]  }
+                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[0], User = users[0], CreatedOn = DateTime.UtcNow, Title = "My first post!"  },
+                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[1], User = users[1], CreatedOn = DateTime.UtcNow, Title = "Hej!"  }
             };
 
             context.NpuPosts.AddRange(posts);

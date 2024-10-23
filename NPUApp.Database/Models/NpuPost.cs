@@ -9,7 +9,8 @@ namespace NPUApp.Database.Models
     public class NpuPost
     {
         public long Id { get; set; }
-
+        public string Title { get; set; } = default!;
+        public DateTime CreatedOn { get; set; } = default!;
         public virtual User User { get; set; } = null!;
         public virtual List<Part> Parts { get; set; } = new();
         public virtual Picture Picture { get; set; } = default!;
