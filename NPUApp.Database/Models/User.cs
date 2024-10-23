@@ -8,8 +8,9 @@ namespace NPUApp.Database.Models
 {
     public class User
     {
+        public long Id { get; set; }
         public string Username { get; set; } = null!;
-        public IEnumerable<NpuPost> NpuPosts { get; set; } = default!;
-        public IEnumerable<Picture> Pictures { get; set; } = default!;
+        public virtual List<NpuPost> NpuPosts { get; set; } = default!;
+        public virtual List<Picture> Pictures { get; set; } = default!;
     }
 }

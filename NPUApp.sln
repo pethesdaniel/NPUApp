@@ -4,8 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPUApp", "NPUApp\NPUApp.csproj", "{9C3989C0-6020-49D4-9BDA-8D69A1B9E577}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5DF08984-A890-4EF7-899A-6D4C6283324F} = {5DF08984-A890-4EF7-899A-6D4C6283324F}
+		{737CF16E-B569-469B-B1D1-89638A207451} = {737CF16E-B569-469B-B1D1-89638A207451}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPUApp.Database", "NPUApp.Database\NPUApp.Database.csproj", "{5DF08984-A890-4EF7-899A-6D4C6283324F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPUApp.BLL", "NPUApp.BLL\NPUApp.BLL.csproj", "{737CF16E-B569-469B-B1D1-89638A207451}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5DF08984-A890-4EF7-899A-6D4C6283324F} = {5DF08984-A890-4EF7-899A-6D4C6283324F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +30,10 @@ Global
 		{5DF08984-A890-4EF7-899A-6D4C6283324F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF08984-A890-4EF7-899A-6D4C6283324F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF08984-A890-4EF7-899A-6D4C6283324F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{737CF16E-B569-469B-B1D1-89638A207451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{737CF16E-B569-469B-B1D1-89638A207451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{737CF16E-B569-469B-B1D1-89638A207451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{737CF16E-B569-469B-B1D1-89638A207451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

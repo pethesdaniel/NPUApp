@@ -8,8 +8,10 @@ namespace NPUApp.Database.Models
 {
     public class NpuPost
     {
-        public User User { get; set; } = null!;
-        public IEnumerable<Part> LegoParts = default!;
-        public Picture Picture { get; set; } = default!;
+        public long Id { get; set; }
+
+        public virtual User User { get; set; } = null!;
+        public virtual List<Part> Parts { get; set; } = new();
+        public virtual Picture Picture { get; set; } = default!;
     }
 }
