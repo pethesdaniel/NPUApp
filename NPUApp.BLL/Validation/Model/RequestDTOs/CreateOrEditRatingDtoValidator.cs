@@ -12,7 +12,6 @@ namespace NPUApp.BLL.Validation.Model.RequestDTOs
     {
         public CreateOrEditRatingDtoValidator()
         {
-            RuleFor(x => x.UserId).GreaterThan(0);
             RuleFor(x => x.PostId).GreaterThan(0);
             RuleFor(x => x.CreativityScore).GreaterThan(0);
             RuleFor(x => x.UniquenessScore).GreaterThan(0);

@@ -6,18 +6,19 @@ using NPUApp.BLL.Model.RequestDTOs;
 using NPUApp.BLL.Model.DTOs;
 using NPUApp.Database.Context;
 using NPUApp.Database.Models;
-using System.Linq;
 
 namespace NPUApp.BLL.Services
 {
     public class PostsService
     {
         private NpuAppDbContext _context { get; set; }
+        private UserService _userService { get; set; }
         private IMapper _mapper { get; set; }
         private IValidator<CreateOrEditPostDto> _postCreateDtoValidator { get; set; }
-        public PostsService(NpuAppDbContext context, IMapper mapper, IValidator<CreateOrEditPostDto> postCreateDtoValidator)
+        public PostsService(NpuAppDbContext context, UserService userService, IMapper mapper, IValidator<CreateOrEditPostDto> postCreateDtoValidator)
         {
             _context = context;
+            _userService = userService;
             _mapper = mapper;
             _postCreateDtoValidator = postCreateDtoValidator;
         }
@@ -74,11 +75,16 @@ namespace NPUApp.BLL.Services
                 throw new ArgumentException(string.Join(",", isDtoValid.Errors.Select(e => e.ErrorMessage)));
             }
 
-            var creator = await _context.Users.FirstOrDefaultAsync(u => u.Id == postDto.CreatorId);
+            var user = await _userService.GetAuthorizedUser();
+
+            if(user == null)
+            {
+                throw new InvalidOperationException();
+            }
 
             var parts = await _context.Parts.Where(p => postDto.Parts.Contains(p.PartNumber)).ToListAsync();
 
-            if(parts.Count == 0 || creator == null)
+            if(parts.Count == 0)
             {
                 throw new ArgumentException();
             }
@@ -87,7 +93,7 @@ namespace NPUApp.BLL.Services
             {
                 Parts = parts,
                 Picture = postDto.PictureUrl,
-                User = creator,
+                UserId = user.Id,
                 Title = postDto.Title,
                 CreatedOn = DateTime.UtcNow,
             };
@@ -104,6 +110,18 @@ namespace NPUApp.BLL.Services
             if(post == null)
             {
                 throw new ArgumentException("No such post id.");
+            }
+
+            var user = await _userService.GetAuthorizedUser();
+
+            if (user == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if(post.UserId != user.Id)
+            {
+                throw new ArgumentException("Not authorized to delete another user's post");
             }
 
             post.Parts.Clear();

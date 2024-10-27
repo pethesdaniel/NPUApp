@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NPUApp.BLL.Model.RequestDTOs;
 using NPUApp.BLL.Model.DTOs;
 using NPUApp.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NPUApp.Controllers
 {
@@ -28,6 +29,7 @@ namespace NPUApp.Controllers
             return await _postsService.SearchPosts(searchPostDto);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateNewPost(CreateOrEditPostDto postDto)
         {
@@ -42,6 +44,7 @@ namespace NPUApp.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeletePost(long postId)
         {

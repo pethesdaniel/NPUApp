@@ -24,8 +24,8 @@ namespace NPUApp.Database.Seed
 
             var users = new User[]
             {
-                new() {Username = "User1"},
-                new() {Username = "User2"}
+                new() {UserName = "User1"},
+                new() {UserName = "User2"}
             };
 
             context.Users.AddRange(users);

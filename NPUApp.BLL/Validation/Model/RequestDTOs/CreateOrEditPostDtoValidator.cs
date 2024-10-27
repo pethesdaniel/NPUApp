@@ -15,7 +15,6 @@ namespace NPUApp.BLL.Validation.Model.RequestDTOs
             RuleFor(x => x.PictureUrl).NotEmpty();
             RuleFor(x => x.Title).MinimumLength(3);
             RuleFor(x => x.Parts).NotEmpty();
-            RuleFor(x => x.CreatorId).GreaterThan(0);
         }
     }
 }

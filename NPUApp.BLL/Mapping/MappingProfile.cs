@@ -15,7 +15,7 @@ namespace NPUApp.BLL.Mapping
         {
             CreateMap<Part, long>().ConvertUsing(x => x.PartNumber);
             CreateMap<NpuPost, PostDto>()
-                .ForMember(p => p.UserName, x => x.MapFrom(s => s.User.Username))
+                .ForMember(p => p.UserName, x => x.MapFrom(s => s.User.UserName))
                 .ForMember(p => p.AvgCreativityScore, x => x.MapFrom(s => s.Ratings.Select(r => r.CreativityScore).DefaultIfEmpty().Average()))
                 .ForMember(p => p.AvgUniquenessScore, x => x.MapFrom(s => s.Ratings.Select(r => r.UniquenessScore).DefaultIfEmpty().Average()));
 

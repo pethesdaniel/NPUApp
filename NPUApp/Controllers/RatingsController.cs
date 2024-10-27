@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NPUApp.BLL.Model.RequestDTOs;
 using NPUApp.BLL.Services;
@@ -10,11 +11,14 @@ namespace NPUApp.Controllers
     public class RatingsController : ControllerBase
     {
         private RatingsService _ratingsService { get; set; }
-        public RatingsController(RatingsService ratingsService)
+        private UserService _userService { get; set; }
+        public RatingsController(RatingsService ratingsService, UserService userService)
         {
             _ratingsService = ratingsService;
+            _userService = userService;
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> RatePost(CreateOrEditRatingDto dto)
         {
@@ -28,12 +32,15 @@ namespace NPUApp.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
-        public async Task<IActionResult> DeleteRating([FromQuery] long postId, [FromQuery] long userId)
+        public async Task<IActionResult> DeleteRating([FromQuery] long postId)
         {
             try
             {
-                await _ratingsService.DeleteRating(postId, userId);
+                var user = await _userService.GetAuthorizedUser();
+                if (user == null) throw new InvalidOperationException("Not authorized");
+                await _ratingsService.DeleteRating(postId, user.Id);
             }
             catch (ArgumentException e)
             {
