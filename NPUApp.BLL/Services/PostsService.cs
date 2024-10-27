@@ -32,6 +32,15 @@ namespace NPUApp.BLL.Services
                 .ToListAsync();
         }
 
+        public async Task<PostDto> GetPostById(long postId)
+        {
+            return await _context.NpuPosts
+                .Include(x => x.Ratings)
+                .Where(x => x.Id == postId)
+                .ProjectTo<PostDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync() ?? throw new ArgumentException("No such postId!");
+        }
+
         public async Task<List<PostDto>> SearchPosts(SearchPostDto dto)
         {
             var query = _context.NpuPosts.AsQueryable();

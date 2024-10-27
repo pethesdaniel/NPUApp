@@ -12,21 +12,39 @@ namespace NPUApp.Controllers
     public class PostsController : ControllerBase
     {
         private PostsService _postsService { get; set; }
-        public PostsController(PostsService postsService)
+        private UserService _userService { get; set; }
+
+        public PostsController(PostsService postsService, UserService userService)
         {
             _postsService = postsService;
+            _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("recent")]
         public async Task<IEnumerable<PostDto>> GetRecentPosts()
         {
             return await _postsService.GetRecentPosts();
+        }
+
+        [HttpGet]
+        public async Task<PostDto> GetPostById([FromQuery] long postId)
+        {
+            return await _postsService.GetPostById(postId);
         }
 
         [HttpPost("search")]
         public async Task<IEnumerable<PostDto>> SearchPosts(SearchPostDto searchPostDto)
         {
             return await _postsService.SearchPosts(searchPostDto);
+        }
+
+        [Authorize]
+        [HttpGet("mine")]
+        public async Task<IEnumerable<PostDto>> MyPosts()
+        {
+            var user = await _userService.GetAuthorizedUser();
+            if (user == null) throw new InvalidOperationException("Not authorized");
+            return await _postsService.SearchPosts(new SearchPostDto { FromUser = user.Id });
         }
 
         [Authorize]
