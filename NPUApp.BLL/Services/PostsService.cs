@@ -72,7 +72,7 @@ namespace NPUApp.BLL.Services
 
             if (!isDtoValid.IsValid)
             {
-                throw new ArgumentException(string.Join(",", isDtoValid.Errors.Select(e => e.ErrorMessage)));
+                throw new AggregateException(isDtoValid.Errors.Select(e => new ArgumentException(e.ErrorMessage, e.ErrorCode)));
             }
 
             var user = await _userService.GetAuthorizedUser();
@@ -86,13 +86,13 @@ namespace NPUApp.BLL.Services
 
             if(parts.Count == 0)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("No parts provided.", "Parts");
             }
 
             var dbo = new NpuPost
             {
                 Parts = parts,
-                Picture = postDto.PictureUrl,
+                PictureUrl = postDto.PictureUrl,
                 UserId = user.Id,
                 Title = postDto.Title,
                 CreatedOn = DateTime.UtcNow,
@@ -109,7 +109,7 @@ namespace NPUApp.BLL.Services
 
             if(post == null)
             {
-                throw new ArgumentException("No such post id.");
+                throw new ArgumentException("No such post id.", "postId");
             }
 
             var user = await _userService.GetAuthorizedUser();
@@ -121,7 +121,7 @@ namespace NPUApp.BLL.Services
 
             if(post.UserId != user.Id)
             {
-                throw new ArgumentException("Not authorized to delete another user's post");
+                throw new ArgumentException("Not authorized to delete another user's post", "Authorization");
             }
 
             post.Parts.Clear();

@@ -32,7 +32,7 @@ namespace NPUApp.BLL.Services
 
             if (!validationResult.IsValid)
             {
-                throw new ArgumentException(string.Join(",", validationResult.Errors.Select(e => e.ErrorMessage)));
+                throw new AggregateException(validationResult.Errors.Select(e => new ArgumentException(e.ErrorMessage)));
             }
 
             var post = await _context.NpuPosts.FirstOrDefaultAsync(x => x.Id == dto.PostId);
@@ -46,7 +46,7 @@ namespace NPUApp.BLL.Services
 
             if (post == null)
             {
-                throw new ArgumentException("No such post id!");
+                throw new ArgumentException("No such post id!", "postId");
             }
 
             var existingRating = await _context.Ratings.Where(x => x.UserId == user.Id && x.PostId == x.Id).FirstOrDefaultAsync();
@@ -75,7 +75,7 @@ namespace NPUApp.BLL.Services
 
             if(rating == null)
             {
-                throw new ArgumentException("No such existing rating");
+                throw new ArgumentException("No such existing rating", "postId");
                 
             }
 
@@ -88,7 +88,7 @@ namespace NPUApp.BLL.Services
 
             if (rating.UserId != user.Id)
             {
-                throw new ArgumentException("Not authorized to delete another user's rating");
+                throw new ArgumentException("Not authorized to delete another user's rating", "Authorization");
             }
 
             _context.Remove(rating);

@@ -32,11 +32,21 @@ namespace NPUApp.Database.Seed
 
             var posts = new NpuPost[]
             {
-                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = "https://picsum.photos/200", User = users[0], CreatedOn = DateTime.UtcNow, Title = "My first post!"  },
-                new() { Parts = new List<Part>{ parts[0] }, Picture = "https://picsum.photos/200", User = users[1], CreatedOn = DateTime.UtcNow, Title = "Hej!"  }
+                new() { Parts = new List<Part>{ parts[0], parts[1] }, PictureUrl = "https://picsum.photos/200", User = users[0], CreatedOn = DateTime.UtcNow, Title = "My first post!"  },
+                new() { Parts = new List<Part>{ parts[0] }, PictureUrl = "https://picsum.photos/200", User = users[1], CreatedOn = DateTime.UtcNow, Title = "Hej!"  }
             };
 
             context.NpuPosts.AddRange(posts);
+
+            var ratings = new Rating[]
+            {
+                new() {Post = posts[0], User = users[1], UniquenessScore =3, CreativityScore = 4},
+                new() {Post = posts[1], User = users[1], UniquenessScore =5, CreativityScore = 5},
+                new() {Post = posts[0], User = users[0], UniquenessScore =5, CreativityScore = 5},
+                new() {Post = posts[1], User = users[0], UniquenessScore =4, CreativityScore = 2},
+            };
+
+            context.Ratings.AddRange(ratings);
 
             context.SaveChanges();
         }

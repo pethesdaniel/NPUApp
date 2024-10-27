@@ -37,9 +37,18 @@ namespace NPUApp.Controllers
             {
                 await _postsService.CreatePost(postDto);
             }
+            catch (AggregateException e)
+            {
+                foreach(var ex in e.InnerExceptions)
+                {
+                    ModelState.AddModelError((ex as ArgumentException)?.ParamName ?? "", ex.Message);
+                    return ValidationProblem(ModelState);
+                }
+            }
             catch (ArgumentException e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError(e.ParamName ?? "", e.Message);
+                return ValidationProblem(ModelState);
             }
             return Ok();
         }
@@ -54,7 +63,8 @@ namespace NPUApp.Controllers
             }
             catch (ArgumentException e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError(e.ParamName ?? "", e.Message);
+                return ValidationProblem(ModelState);
             }
             return Ok();
         }

@@ -37,7 +37,7 @@ namespace NPUApp.Controllers
                     ModelState.AddModelError(error.Code, error.Description);
                 }
             }
-            return BadRequest(ModelState);
+            return ValidationProblem(ModelState);
         }
 
         [HttpPost]
@@ -53,9 +53,10 @@ namespace NPUApp.Controllers
                     Token = accessToken,
                 });
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                return BadRequest("Bad credentials");
+                ModelState.AddModelError(e.ParamName ?? "", e.Message);
+                return ValidationProblem(ModelState);
             }
         }
 

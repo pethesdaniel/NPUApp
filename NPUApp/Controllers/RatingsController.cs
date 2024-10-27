@@ -25,9 +25,20 @@ namespace NPUApp.Controllers
             try
             {
                 await _ratingsService.RatePost(dto);
-            } catch (ArgumentException e)
+
+            }
+            catch (AggregateException e)
             {
-                return BadRequest(e.Message);
+                foreach (var ex in e.InnerExceptions)
+                {
+                    ModelState.AddModelError((ex as ArgumentException)?.ParamName ?? "", ex.Message);
+                    return ValidationProblem(ModelState);
+                }
+            }
+            catch (ArgumentException e)
+            {
+                ModelState.AddModelError(e.ParamName ?? "", e.Message);
+                return ValidationProblem(ModelState);
             }
             return Ok();
         }
@@ -44,7 +55,8 @@ namespace NPUApp.Controllers
             }
             catch (ArgumentException e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError(e.ParamName ?? "", e.Message);
+                return ValidationProblem(ModelState);
             }
             return Ok();
         }

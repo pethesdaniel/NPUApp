@@ -15,6 +15,6 @@ namespace NPUApp.Database.Models
         public virtual long UserId { get; set; }
         public virtual List<Part> Parts { get; set; } = new();
         public virtual List<Rating> Ratings { get; set; } = new();
-        public string Picture { get; set; } = default!;
+        public string PictureUrl { get; set; } = default!;
     }
 }

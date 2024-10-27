@@ -53,7 +53,7 @@ namespace NPUApp.BLL.Services
 
             if (!areCredentialsValid)
             {
-                throw new ArgumentException("Bad credentials");
+                throw new ArgumentException("Bad credentials", "Authorization");
             }
 
             var userInDb = _context.Users.FirstOrDefault(u => u.Email == email);
