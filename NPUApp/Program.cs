@@ -1,5 +1,6 @@
 using NPUApp.BLL.Mapping;
 using NPUApp.BLL.Services;
+using NPUApp.BLL.Validation;
 using NPUApp.Database.Context;
 using NPUApp.Database.Extensions;
 
@@ -19,6 +20,10 @@ builder.Services.SeedDbWithData();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<PostsService>();
+builder.Services.AddScoped<RatingsService>();
+builder.Services.AddScoped<PartsService>();
+
+builder.Services.AddBllValidators();
 
 var app = builder.Build();
 

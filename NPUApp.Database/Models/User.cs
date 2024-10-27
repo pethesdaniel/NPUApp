@@ -11,6 +11,5 @@ namespace NPUApp.Database.Models
         public long Id { get; set; }
         public string Username { get; set; } = null!;
         public virtual List<NpuPost> NpuPosts { get; set; } = default!;
-        public virtual List<Picture> Pictures { get; set; } = default!;
     }
 }

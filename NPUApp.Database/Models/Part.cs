@@ -13,5 +13,6 @@ namespace NPUApp.Database.Models
         [Key]
         public long PartNumber { get; set; }
         public string FriendlyName { get; set; } = null!;
+        public virtual List<NpuPost> Posts { get; set; } = new();
     }
 }

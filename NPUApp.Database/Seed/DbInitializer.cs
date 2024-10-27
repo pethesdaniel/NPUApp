@@ -30,18 +30,10 @@ namespace NPUApp.Database.Seed
 
             context.Users.AddRange(users);
 
-            var pictures = new Picture[]
-            {
-                new() { Identifier = Guid.NewGuid()},
-                new() { Identifier = Guid.NewGuid()}
-            };
-
-            context.Pictures.AddRange(pictures);
-
             var posts = new NpuPost[]
             {
-                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[0], User = users[0], CreatedOn = DateTime.UtcNow, Title = "My first post!"  },
-                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = pictures[1], User = users[1], CreatedOn = DateTime.UtcNow, Title = "Hej!"  }
+                new() { Parts = new List<Part>{ parts[0], parts[1] }, Picture = "https://picsum.photos/200", User = users[0], CreatedOn = DateTime.UtcNow, Title = "My first post!"  },
+                new() { Parts = new List<Part>{ parts[0] }, Picture = "https://picsum.photos/200", User = users[1], CreatedOn = DateTime.UtcNow, Title = "Hej!"  }
             };
 
             context.NpuPosts.AddRange(posts);

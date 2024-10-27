@@ -13,7 +13,6 @@ namespace NPUApp.Database.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Part> Parts { get; set; }
         public DbSet<NpuPost> NpuPosts { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

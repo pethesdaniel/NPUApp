@@ -12,7 +12,9 @@ namespace NPUApp.Database.Models
         public string Title { get; set; } = default!;
         public DateTime CreatedOn { get; set; } = default!;
         public virtual User User { get; set; } = null!;
+        public virtual long UserId { get; set; }
         public virtual List<Part> Parts { get; set; } = new();
-        public virtual Picture Picture { get; set; } = default!;
+        public virtual List<Rating> Ratings { get; set; } = new();
+        public string Picture { get; set; } = default!;
     }
 }

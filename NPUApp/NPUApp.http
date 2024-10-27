@@ -1,6 +1,0 @@
-@NPUApp_HostAddress = http://localhost:5120
-
-GET {{NPUApp_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
