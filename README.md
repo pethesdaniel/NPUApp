@@ -1,1 +1,1 @@
-# NPUApp - Webapplication showcasing nice usage of a plastic bricks. 
+# NPUApp - Webapplication showcasing nice usage of plastic bricks. 
